@@ -27,16 +27,16 @@ public class WhatsappRepository {
         this.messageId = 0;
     }
 
-    public String createUser(String name,String number){
+    public String createUser(String name,String number) throws Exception {
         User user=new User(name,number);
         if(userMobile.contains(number)){
-            return "";
+            throw new Exception("User already present");
         }
         userMobile.add(number);
         return"User Successfully created";
     }
 
-    public Group createUser(List<User> users) {
+    public Group createGroup(List<User> users) {
         int n=users.size();
         if(n==2){
             Group group=new Group(users.get(1).getName(),n);
@@ -60,12 +60,12 @@ public class WhatsappRepository {
         return messageId;
     }
 
-    public int sendMessage(Message message, User sender, Group group) {
+    public int sendMessage(Message message, User sender, Group group) throws Exception {
         if(!groupUserMap.containsKey(group)){
-            return -1;
+            throw new Exception("group does not exist");
         }
         if(!groupUserMap.get(group).contains(sender)){
-            return -2;
+            throw new Exception(" sender is not a member of the group");
         }
         senderMap.put(message,sender);
         if(!groupMessageMap.containsKey(group)){
@@ -81,15 +81,15 @@ public class WhatsappRepository {
         return groupMessageMap.get(group).size();
     }
 
-    public String changeAdmin(User approver, User user, Group group) {
+    public String changeAdmin(User approver, User user, Group group) throws Exception {
         if(!groupUserMap.containsKey(group)){
-            return "";
+            throw new Exception("Group does not exist");
         }
         if(!adminMap.get(group).equals(approver)){
-            return "";
+            throw new Exception("approver is not the current admin of the group");
         }
         if(!groupUserMap.get(group).contains(user)){
-            return "";
+            throw new Exception(" user is not a part of the group");
         }
         adminMap.put(group,user);
         return"Successfully admin changed";

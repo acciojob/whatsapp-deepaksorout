@@ -59,12 +59,6 @@ public class WhatsappController {
         //Throw "Group does not exist" if the mentioned group does not exist
         //Throw "You are not allowed to send message" if the sender is not a member of the group
         //If the message is sent successfully, return the final number of messages in that group.
-        if(whatsappService.sendMessage(message,sender,group)==-1){
-            throw new Exception("Group does not exist");
-        }
-        else if(whatsappService.sendMessage(message,sender,group)==-2){
-            throw new Exception("You are not allowed to send message");
-        }
         return whatsappService.sendMessage(message, sender, group);
     }
     @PutMapping("/change-admin")
@@ -73,9 +67,7 @@ public class WhatsappController {
         //Throw "Approver does not have rights" if the approver is not the current admin of the group
         //Throw "User is not a participant" if the user is not a part of the group
         //Change the admin of the group to "user" and return "SUCCESS". Note that at one time there is only one admin and the admin rights are transferred from approver to user.
-        if(whatsappService.changeAdmin(approver,user,group).equals("")){
-            throw new Exception("you are not allowed to change admin");
-        }
+
         return whatsappService.changeAdmin(approver, user, group);
     }
 
