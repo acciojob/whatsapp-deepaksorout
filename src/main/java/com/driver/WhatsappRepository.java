@@ -33,7 +33,7 @@ public class WhatsappRepository {
             throw new Exception("User already present");
         }
         userMobile.add(number);
-        return"User Successfully created";
+        return"User created";
     }
 
     public Group createGroup(List<User> users) {
@@ -41,17 +41,14 @@ public class WhatsappRepository {
         if(n==2){
             Group group=new Group(users.get(1).getName(),n);
             groupUserMap.put(group,users);
-            adminMap.put(group,users.get(0));
+           // adminMap.put(group,users.get(0));
             return group;
         }
-        if(n>2){
-            customGroupCount+=1;
-            Group group=new Group("Group "+customGroupCount,n);
-            groupUserMap.put(group,users);
-            adminMap.put(group,users.get(0));
-            return group;
-        }
-        return null;
+        customGroupCount+=1;
+        Group group=new Group("Group "+customGroupCount,n);
+        groupUserMap.put(group,users);
+        adminMap.put(group,users.get(0));
+        return group;
     }
 
     public int createMessage(String content) {
@@ -92,6 +89,6 @@ public class WhatsappRepository {
             throw new Exception(" user is not a part of the group");
         }
         adminMap.put(group,user);
-        return"Successfully admin changed";
+        return"SUCCESS";
     }
 }
